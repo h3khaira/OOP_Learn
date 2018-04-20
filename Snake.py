@@ -8,7 +8,11 @@ class snake:
         snake.status=status
         snake.headx=headx
         snake.heady=heady
-
+class food:
+    def __init__(self,locx,locy):
+        food.locx=locx
+        food.locy=locy
+        
 def main():
     screen_width=600
     screen_height=600
