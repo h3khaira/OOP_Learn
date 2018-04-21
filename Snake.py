@@ -34,24 +34,22 @@ class Snake:
                 self._y=y
             def drawfood(self,x,y):
                 pygame.draw.rect(screen,black,[x,y,10,10])
-            
 def main():
     done=False
     while not done:
         for event in pygame.event.get():
             if event.type==pygame.QUIT:
-                done=True   
+                done=True 
+             #Key Press Handling
+            if event.type==pygame.K_LEFT:  
+                Snake.movesnake(-1,0)
+            if event.type==pygame.K_RIGHT:
+                Snake.movesnake(1,0)  
+            if event.type==pygame.K_UP:
+                Snake.movesnake(0,1)  
+            if event.type==pygame.K_DOWN:
+                Snake.movesnake(0,1)  
         #Clean the slate
-        screen.fill(white)
-        #Key Press Handling
-        keys=pygame.key.get_pressed()
-        if keys[K_LEFT]:
-            Snake.movesnake(-1,0)
-        if keys[K_RIGHT]:
-            Snake.movesnake(1,0)
-        if keys[K_UP]:
-            Snake.movesnake(0,1)
-        if keys[K_DOWN]:
-            Snake.movesnake(0,-1)
+        screen.fill(white)       
         #Updates the display     
         pygame.display.update()
