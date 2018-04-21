@@ -2,60 +2,39 @@ import pygame
 from random import randint
 pygame.init()
 pygame.font.init()
-#length will be in units,headx and heady will dictate position 
-class snake:
-    def __init__(self,length,segments,headx,heady):
-        self._length=length
-        self._headx=headx
-        self._heady=heady
-    def drawsnake(self):
-        pygame.draw.rect(self._width,self._height,self.locx,self.locy)
-    def movesnake(self,xspeed,yspeed):
-         move_ip()
-        
-class food:
-    def __init__(self,locx,locy,width,height):
-        self._locx=locx
-        self._locy=locy
-        self._width=width
-        self._height=height
-    #def drawfood()
-     #   self.locx=randint(1,screen_width)
-      #  self.locy=randint(1,screen_height)
-       # pygame.draw.rect(self._width,self._height,self.locx,self.locy)
+white =(255,255)
+black=(0,0)
+snakex=0
+snakey=0
+foodx=0
+foody=0
+screen=pygame.display.set_mode((800,800))
+pygame.display.set_caption('Snake')
+screen=fill(white)
 
-        
-def main():
-    white=(255,255,255)
-    black=(0,0,0)
-    screen_width=600
-    screen_height=600
-    screen=pygame.display.set_mode([screen_width,screen_height])
-    pygame.display.set_caption('Snake')
+class Snake:
+    def __init__(self,headx,heady,segments):
     
-    screen.fill(white)
-    pygame.display.update()
-    done=False
-    snakex=300
-    snakey=300
-    key=pygame.key.get_pressed()
-    if key[pygame.K_LEFT]:
-        snake.movesnake(-1,0)
-    if key[pygame.K_RIGHT]:
-        snake.movesnake(1, 0)
-    if key[pygame.K_UP]:
-        snake.movesnake(0, 1)
-    if key[pygame.K_DOWN]:
-        snake.movesnake(0, -1)
+    def drawsnake(headx,heady,pastcoord):
+        pygame.draw.rect(screen,black,[headx,heady,10,10])
+    def movesnake(xspeed,yspeed):
+    
+class Food:
+    def __init__(self,x,y):
+
+    def drawfood(x,y)
+        pygame.draw.rect(screen,black,[x,y,10,10])
+def main():
     while not done:
-        True
-        #snake.drawsnake()
-
-        
-
-if __name__ == '__main__':
-    main()
-    pygame.quit()
-   
-
-
+        screen.fill(white)
+        #Key Press Handling
+        keys=pygame.key.get_pressed()
+        if keys[K_LEFT]:
+            Snake.movesnake(-1,0)
+        if keys[K_RIGHT]:
+            Snake.movesnake(1,0)
+        if keys[K_UP]:
+            Snake.movesnake(0,1)
+        if keys[K_DOWN]:
+            Snake.movesnake(0,-1)     
+        pygame.display.update()
