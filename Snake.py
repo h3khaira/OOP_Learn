@@ -8,48 +8,31 @@ snakex=0
 snakey=0
 foodx=0
 foody=0
-done=False
-for event in pygame.event.get():
-            if event.type==pygame.QUIT:
-                pygame.quit()
-                quit()
 screen=pygame.display.set_mode((800,600))
 screen.fill(white)
 pygame.display.set_caption('Snake')
 pygame.display.update()
-#Defining the player snake
+# #Defining the player snake
 class Snake:
-    def __init__(self,headx,heady,segments,xspeed,yspeed):
-        self._headx=headx
-        self._heady=heady
-        self._segments=segments
-    def drawsnake(self,headx,heady,pastcoord):
-        pygame.draw.rect(screen,black,[headx,heady,10,10])
-    def movesnake(self,xspeed,yspeed):
+    def __init__(self,x,y,,xspeed,yspeed):
+        self._x=x
+        self._y=y
+        self._xspeed=xspeed
+        self._yspeed=yspeed
+    def move(self):
 
-#Defines the food blocks    
-        class Food:
-            def __init__(self,x,y):
-                self._x=x
-                self._y=y
-            def drawfood(self,x,y):
-                pygame.draw.rect(screen,black,[x,y,10,10])
+# #Defines the food blocks  
+# 
+#   
 def main():
+    player=Snake(300,300,1,0)
     done=False
     while not done:
         for event in pygame.event.get():
             if event.type==pygame.QUIT:
                 done=True 
-             #Key Press Handling
-            if event.type==pygame.K_LEFT:  
-                Snake.movesnake(-1,0)
-            if event.type==pygame.K_RIGHT:
-                Snake.movesnake(1,0)  
-            if event.type==pygame.K_UP:
-                Snake.movesnake(0,1)  
-            if event.type==pygame.K_DOWN:
-                Snake.movesnake(0,1)  
-        #Clean the slate
-        screen.fill(white)       
-        #Updates the display     
-        pygame.display.update()
+        # #Clean the slate
+        # screen.fill(white)       
+        # #Updates the display     
+        # pygame.display.update()
+main()
