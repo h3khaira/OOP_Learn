@@ -22,10 +22,10 @@ class Snake:
         for j in range(0,self._length,1):
             pygame.draw.rect(screen,black,[self._xlist[j],self._ylist[j],10,10])
     def update(self): 
-        for i in reversed(range (self._length,1,1)):
-            self._xlist[i]=self._xlist[i-1]
-            print self._xlist[i]
-            self._ylist[i]=self._ylist[i-1]
+        if self._length>1:
+            for i in range (self._length,0,-1):
+                self._xlist[i-1]=self._xlist[i-2]
+                self._ylist[i-1]=self._ylist[i-2]
         self._xlist[0]=self._x
         self._ylist[0]=self._y
     def running(self):
