@@ -32,17 +32,21 @@ class Snake:
         self._x=self._x+self._xspeed
         self._y=self._y+self._yspeed
     def moveup(self):
-        self._yspeed=-0.5
-        self._xspeed=0
+        if (self._yspeed != 0.5):
+            self._yspeed=-0.5
+            self._xspeed=0
     def movedown(self):
-        self._yspeed=0.5
-        self._xspeed=0
+        if (self._yspeed != -0.5):
+            self._yspeed=0.5
+            self._xspeed=0
     def moveright(self):
-        self._xspeed=0.5
-        self._yspeed=0
+        if (self._xspeed != -0.5):
+            self._xspeed=0.5
+            self._yspeed=0
     def moveleft(self):
-        self._xspeed=-0.5
-        self._yspeed=0
+        if (self._xspeed != 0.5):
+            self._xspeed=-0.5
+            self._yspeed=0
     def snakeycoord(self):
         return (self._y)
     def snakexcoord(self):
@@ -84,13 +88,13 @@ def main():
                     player.moveup()
         player.running()
         #####collision detection####
-        if (player.snakexcoord()>=food.foodxcoord() and player.snakexcoord()<=food.foodxcoord()+10):
-            if (player.snakeycoord()>=food.foodycoord() and player.snakeycoord()<=food.foodycoord()+10):
+        if ((player.snakexcoord()>=food.foodxcoord() and player.snakexcoord()<=food.foodxcoord()+10)or(player.snakexcoord()+10>food.foodxcoord() and player.snakexcoord()+10<food.foodxcoord()+10)):
+            if ((player.snakeycoord()>=food.foodycoord() and player.snakeycoord()<=food.foodycoord()+10)or (player.snakeycoord()+10>food.foodycoord() and player.snakeycoord()+10<food.foodycoord()+10)):
                 player.increasesize()
                 food.respawn()
                 food.drawfood()
         screen.fill(white)
-        if updatecount==20:
+        if updatecount==20:#x,y speed is 0.5, so the snake traverses 10 pixels in 20 iterations, we cant to update every 10 pixels
             player.update()
             updatecount=0
         updatecount=updatecount+1
