@@ -15,17 +15,18 @@ class Snake:
         self._xspeed=xspeed
         self._yspeed=yspeed
         self._length=length
-        self._xlist=[x]
-        self._ylist=[y]
+        self._xlist=[self._x]
+        self._ylist=[self._y]
     def drawsnake(self):
-        pygame.draw.rect(screen,black,[self._x,self._y,10,10])
-        for i in range (1,self._length):
-            self._xlist[0]=self._x
-            self._ylist[0]=self._y
-            pygame.draw.rect(screen,black,[self._xlist[i],self._ylist[i],10,10])
-            self._xlist.insert(1,self._x)
-            self._ylist.insert(1,self._y)
-        
+        #for j in range(0,self._length-1):
+            #pygame.draw.rect(screen,black,[self._x,self._y,10,10])
+        pygame.draw.rect(screen,black,[self._xlist[0],self._ylist[0],10,10])
+    def update(self):  
+        for i in range (self._length-1,1,1):
+            self._xlist[i]=self._xlist[i-1]
+            self._ylist[i]=self._ylist[i-1]
+        self._xlist[0]=self._x
+        self._ylist[0]=self._y
     def running(self):
         self._x=self._x+self._xspeed
         self._y=self._y+self._yspeed
@@ -41,7 +42,14 @@ class Snake:
     def moveleft(self):
         self._xspeed=-0.5
         self._yspeed=0
-               
+    def snakeycoord(self):
+        return (self._y)
+    def snakexcoord(self):
+        return (self._x)
+    def increasesize(self):
+        self._length=self._length+1 
+        self._xlist.append(self._x)
+        self._ylist.append(self._y)    
 class Food:
     def __init__(self,foodx,foody):
         self._x=foodx
@@ -51,8 +59,12 @@ class Food:
     def respawn(self):
         self._x=randint(1,790)
         self._y=randint(1,590)
-  
+    def foodycoord(self):
+        return (self._y)
+    def foodxcoord(self):
+        return (self._x) 
 def main():
+    updatecount=0
     player=Snake(300,300,0.5,0,1)
     food=Food(100,100)
     done=False
@@ -71,8 +83,17 @@ def main():
                     player.moveup()
         player.running()
         #####collision detection####
-        
-        screen.fill(white) 
+        if (player.snakexcoord()>=food.foodxcoord() and player.snakexcoord()<=food.foodxcoord()+10):
+            if (player.snakeycoord()>=food.foodycoord() and player.snakeycoord()<=food.foodycoord()+10):
+                player.increasesize()
+                food.respawn()
+                food.drawfood()
+
+        screen.fill(white)
+        updatecount=updatecount+1
+        if updatecount==20:
+            player.update()
+            updatecount=0
         player.drawsnake()
         food.drawfood()      
         #Updates the display     
