@@ -18,9 +18,10 @@ class Snake:
         self._xlist=[self._x]
         self._ylist=[self._y]
     def drawsnake(self):
-        #for j in range(0,self._length-1):
+        pygame.draw.rect(screen,black,[self._x,self._y,10,10])
+        for j in range(1,self._length-1,1):
             #pygame.draw.rect(screen,black,[self._x,self._y,10,10])
-        pygame.draw.rect(screen,black,[self._xlist[0],self._ylist[0],10,10])
+            pygame.draw.rect(screen,black,[self._xlist[j],self._ylist[j],10,10])
     def update(self):  
         for i in range (self._length-1,1,1):
             self._xlist[i]=self._xlist[i-1]
@@ -48,14 +49,14 @@ class Snake:
         return (self._x)
     def increasesize(self):
         self._length=self._length+1 
-        self._xlist.append(self._x)
-        self._ylist.append(self._y)    
+        self._xlist.insert(1,self._x)
+        self._ylist.insert(1,self._y)    
 class Food:
     def __init__(self,foodx,foody):
         self._x=foodx
         self._y=foody
     def drawfood(self):
-        pygame.draw.rect(screen,black,[self._x,self._y,10,10])
+        pygame.draw.rect(screen,(255,0,0),[self._x,self._y,10,10])
     def respawn(self):
         self._x=randint(1,790)
         self._y=randint(1,590)
@@ -91,9 +92,7 @@ def main():
 
         screen.fill(white)
         updatecount=updatecount+1
-        if updatecount==20:
-            player.update()
-            updatecount=0
+        player.update()
         player.drawsnake()
         food.drawfood()      
         #Updates the display     
