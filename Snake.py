@@ -15,29 +15,45 @@ class Snake:
         self._xspeed=xspeed
         self._yspeed=yspeed
         self._length=length
+        self._xlist=[x]
+        self._ylist=[y]
     def drawsnake(self):
         pygame.draw.rect(screen,black,[self._x,self._y,10,10])
-    def moveup(self):
-        self._y=self._y+self._yspeed
-    def movedown(self):
-        self._y=self._y-self._yspeed
-    def moveright(self):
+        for i in range (1,self._length):
+            self._xlist[0]=self._x
+            self._ylist[0]=self._y
+            pygame.draw.rect(screen,black,[self._xlist[i],self._ylist[i],10,10])
+            self._xlist.insert(1,self._x)
+            self._ylist.insert(1,self._y)
+        
+    def running(self):
         self._x=self._x+self._xspeed
+        self._y=self._y+self._yspeed
+    def moveup(self):
+        self._yspeed=-0.5
+        self._xspeed=0
+    def movedown(self):
+        self._yspeed=0.5
+        self._xspeed=0
+    def moveright(self):
+        self._xspeed=0.5
+        self._yspeed=0
     def moveleft(self):
-        self._x=self._x-self._xspeed
-        
-        
+        self._xspeed=-0.5
+        self._yspeed=0
+               
 class Food:
     def __init__(self,foodx,foody):
         self._x=foodx
         self._y=foody
     def drawfood(self):
         pygame.draw.rect(screen,black,[self._x,self._y,10,10])
-    #def respawn(self):
-
+    def respawn(self):
+        self._x=randint(1,790)
+        self._y=randint(1,590)
   
 def main():
-    player=Snake(300,300,1,0,1)
+    player=Snake(300,300,0.5,0,1)
     food=Food(100,100)
     done=False
     while not done:
@@ -53,6 +69,9 @@ def main():
                     player.movedown()
                 if event.key==pygame.K_UP:
                     player.moveup()
+        player.running()
+        #####collision detection####
+        
         screen.fill(white) 
         player.drawsnake()
         food.drawfood()      
