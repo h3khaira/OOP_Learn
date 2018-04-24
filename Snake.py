@@ -82,11 +82,11 @@ class Food:
         return (self._x) 
 def main():
     updatecount=0
-    player=Snake(300,300,0.5,0,1)
-    food=Food(100,100)
+    player=Snake(300,300,0.5,0,1)#creating player object
+    food=Food(100,100) #creating food object
     done=False
     while not done:
-        for event in pygame.event.get():
+        for event in pygame.event.get():#key press handling
             if event.type==pygame.QUIT:
                 done=True 
             if event.type == pygame.KEYDOWN:
@@ -109,8 +109,7 @@ def main():
         if updatecount==20:#x,y speed is 0.5, so the snake traverses 10 pixels in 20 iterations, we cant to update every 10 pixels
             player.update()
             updatecount=0
-        if player.selfcollision() or player.wallcollision():
-        #if player.wallcollision():
+        if player.selfcollision() or player.wallcollision():#quits the game if collision detected
             pygame.quit()
         updatecount=updatecount+1
         player.drawsnake()
