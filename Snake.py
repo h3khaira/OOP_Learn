@@ -4,7 +4,9 @@ from random import randint
 pygame.font.init()
 white =(255,255,255)
 black=(0,0,0)
-screen=pygame.display.set_mode((800,600))
+swidth=800
+sheight=600
+screen=pygame.display.set_mode((swidth,sheight))
 screen.fill(white)
 pygame.display.set_caption('Snake')
 pygame.display.update()
@@ -55,6 +57,16 @@ class Snake:
         self._length=self._length+1 
         self._xlist.insert(0,self._x)
         self._ylist.insert(0,self._y)  
+    def selfcollision(self):
+        for k in range(3,self._length,1):#make it so the head cant collide with the 2nd or 3rd block to avoid issues with overlapping
+            if (self._x>=self._xlist[k]+2 and self._x<=self._xlist[k]+8):
+                if (self._y>=self._ylist[k]+2 and self._y<=self._ylist[k]+8):
+                    return True
+    def wallcollision(self):
+        if (self._x<=0 or self._x+10>=swidth):
+            return True
+        if (self._y<=0 or self._y+10>=sheight):
+            return True
 class Food:
     def __init__(self,foodx,foody):
         self._x=foodx
@@ -87,7 +99,7 @@ def main():
                 if event.key==pygame.K_UP:
                     player.moveup()
         player.running()
-        #####collision detection####
+        #####collision detection with food####
         if ((player.snakexcoord()>=food.foodxcoord() and player.snakexcoord()<=food.foodxcoord()+10)or(player.snakexcoord()+10>food.foodxcoord() and player.snakexcoord()+10<food.foodxcoord()+10)):
             if ((player.snakeycoord()>=food.foodycoord() and player.snakeycoord()<=food.foodycoord()+10)or (player.snakeycoord()+10>food.foodycoord() and player.snakeycoord()+10<food.foodycoord()+10)):
                 player.increasesize()
@@ -97,6 +109,9 @@ def main():
         if updatecount==20:#x,y speed is 0.5, so the snake traverses 10 pixels in 20 iterations, we cant to update every 10 pixels
             player.update()
             updatecount=0
+        if player.selfcollision() or player.wallcollision():
+        #if player.wallcollision():
+            pygame.quit()
         updatecount=updatecount+1
         player.drawsnake()
         food.drawfood()      
