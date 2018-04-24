@@ -80,6 +80,24 @@ class Food:
         return (self._y)
     def foodxcoord(self):
         return (self._x) 
+def endscreen():
+    screen.fill(black)
+    endgame = pygame.font.SysFont('Calibri', 30)
+    endgamescreen = endgame.render('Press C to countinue or P to quit', False, (255, 255,255))
+    screen.blit(endgamescreen,(175,300))
+    restart =True
+    while restart:
+        pygame.display.update()
+        for event in pygame.event.get():
+            if event.type == pygame.KEYDOWN:
+                if event.key==pygame.K_c:
+                    pygame.display.update()
+                    main()
+                    restart=False
+                if event.key==pygame.K_p:
+                    pygame.display.update()
+                    pygame.quit()
+
 def main():
     updatecount=0
     player=Snake(300,300,0.5,0,1)#creating player object
@@ -110,7 +128,7 @@ def main():
             player.update()
             updatecount=0
         if player.selfcollision() or player.wallcollision():#quits the game if collision detected
-            pygame.quit()
+            endscreen()
         updatecount=updatecount+1
         player.drawsnake()
         food.drawfood()      
